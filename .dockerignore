@@ -1,0 +1,10 @@
+node_modules
+dist
+data
+android
+.env
+*.local
+*.apk
+.git
+docs
+deploy/Dockerfile

@@ -1,0 +1,46 @@
+{
+  "name": "noise-nova",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Noise Nova — environmental noise monitoring hub, dashboard and Android edge node",
+  "scripts": {
+    "hub": "node server/index.ts",
+    "web": "vite",
+    "dev": "concurrently -n hub,web -c yellow,cyan \"npm:hub\" \"npm:web\"",
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "start": "npm run build && node server/index.ts",
+    "check": "node scripts/selfcheck.mjs",
+    "cap:sync": "npm run build && npx cap sync android",
+    "apk:build": "npm run build && npx cap sync android && node scripts/build-apk.mjs",
+    "apk:open": "npx cap open android",
+    "firewall": "powershell -ExecutionPolicy Bypass -File scripts/allow-firewall.ps1"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/haptics": "^8.0.0",
+    "@capacitor/local-notifications": "^8.0.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.0",
+    "lucide-react": "^0.545.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "recharts": "^2.15.4",
+    "tailwind-merge": "^3.3.1",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.0.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/node": "^24.7.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/ws": "^8.18.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.2.1",
+    "tailwindcss": "^4.1.14",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.0"
+  }
+}

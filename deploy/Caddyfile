@@ -1,0 +1,36 @@
+# SITE_ADDRESS is supplied by docker-compose.
+#   - ":80" (default)     plain HTTP, fine for a throwaway VM demo
+#   - "noisenova.example.com"  automatic HTTPS via Let's Encrypt
+#
+# Cloudflare note: if the A record is proxied (orange cloud), HTTP-01 cannot
+# complete. Either set the record to DNS-only (grey cloud), or switch to the
+# DNS-01 block at the bottom and pass a Cloudflare API token.
+
+{$SITE_ADDRESS} {
+	encode zstd gzip
+
+	# WebSocket upgrade must survive the proxy hop.
+	@ws {
+		header Connection *Upgrade*
+		header Upgrade websocket
+	}
+	reverse_proxy @ws hub:8787
+	reverse_proxy hub:8787
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+
+	log {
+		output stderr
+		level WARN
+	}
+}
+
+# --- Cloudflare DNS-01 variant (uncomment and fill in) -----------------------
+# tls {
+# 	dns cloudflare {env.CF_API_TOKEN}
+# }

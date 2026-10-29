@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Noise Nova</string>
+    <string name="title_activity_main">Noise Nova</string>
+    <string name="package_name">live.sahnirmaan.noisenova</string>
+    <string name="custom_url_scheme">live.sahnirmaan.noisenova</string>
+</resources>
